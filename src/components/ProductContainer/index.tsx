@@ -7,13 +7,6 @@ import {
     ProductButtonLabel
 } from "./style";
 
-interface ProductProps {
-    id: number;
-    image: string;
-    description: string;
-    price: number;
-}
-
 interface ProductContainerBoxProps {
     image: string;
     description: string;

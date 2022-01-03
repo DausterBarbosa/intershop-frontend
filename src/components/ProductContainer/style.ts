@@ -9,8 +9,13 @@ export const ProductContainer = styled.div`
     border-radius: 5px;
 `;
 
-export const ProductImage = styled.img`
-    width: 100%;
+export const ProductImage = styled.div<{
+    src: string;
+}>`
+    background: red;
+    height: 300px;
+    background: ${props => `url(${props.src}) no-repeat`};
+    background-size: cover;
 `;
 
 export const ProductDescription = styled.p`

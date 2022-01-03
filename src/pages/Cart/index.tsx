@@ -1,3 +1,7 @@
+import {useContext, useState, useEffect} from "react";
+
+import CartContext from "../../context/cartContext";
+
 import {RiDeleteBin7Fill} from "react-icons/ri";
 import {AiOutlinePlusCircle, AiOutlineMinusCircle} from "react-icons/ai";
 
@@ -24,85 +28,63 @@ import {
     SidePanelButton,
     SidePanelButtonLabel
 } from "./style";
+import { formatPrice } from "../../utils/format";
 
 function Cart(){
+    const {cartItems, addToCart, removeToCart, deleteToCart} = useContext(CartContext);
+
+    const [totalItens, setTotalItems] = useState(0);
+    const [totalValue, setTotalValue] = useState(0);
+
+    useEffect(() => {
+        const total = cartItems.reduce((prev, next) => {
+            return prev + next.mount!;
+        }, 0);
+
+        setTotalItems(total);
+    }, [cartItems]);
+
+    useEffect(() => {
+        const total = cartItems.reduce((prev, next) => {
+            return prev + next.subtotal!;
+        }, 0);
+
+        setTotalValue(total);
+    }, [cartItems]);
+
     return (
         <CartContainer>
             <ProductList>
-                <ProductContainer>
+                {cartItems.map((product) => (
+                    <ProductContainer>
                     <ProductContainerHeader>
                         <ItemContainer>
-                            <ItemImage src="https://www.extra-imagens.com.br/Control/ArquivoExibir.aspx?IdArquivo=32172497"/>
+                            <ItemImage src={product.image}/>
                             <ItemInfoContainer>
-                                <ItemInfoDescription>Camisa do flamendo feita de algodão importado</ItemInfoDescription>
-                                <ItemInfoPrice>R$ 500,00</ItemInfoPrice>
+                                <ItemInfoDescription>{product.description}</ItemInfoDescription>
+                                <ItemInfoPrice>{formatPrice(product.price)}</ItemInfoPrice>
                             </ItemInfoContainer>
                         </ItemContainer>
-                        <RiDeleteBin7Fill size={25} color="#5a2d82" cursor="pointer"/>
+                        <RiDeleteBin7Fill size={25} color="#5a2d82" cursor="pointer" onClick={() => deleteToCart(product)}/>
                     </ProductContainerHeader>
                     <ProductContainerFooter>
                         <QuantContainer>
                             <QuantContainerLabel>Quantidade:</QuantContainerLabel>
                             <QuantContainerPanel>
-                                <AiOutlinePlusCircle size={25} color="#5a2d82" cursor="pointer"/>
-                                <QuantContainerPanelInput readOnly value={1}/>
-                                <AiOutlineMinusCircle size={25} color="#5a2d82" cursor="pointer"/>
+                                <AiOutlinePlusCircle size={25} color="#5a2d82" cursor="pointer" onClick={() => addToCart(product)}/>
+                                <QuantContainerPanelInput readOnly value={product.mount}/>
+                                <AiOutlineMinusCircle size={25} color="#5a2d82" cursor="pointer" onClick={() => removeToCart(product)}/>
                             </QuantContainerPanel>
                         </QuantContainer>
-                        <ProductContainerFooterPrice>R$ 500,00</ProductContainerFooterPrice>
+                        <ProductContainerFooterPrice>{formatPrice(Number(product.subtotal))}</ProductContainerFooterPrice>
                     </ProductContainerFooter>
                 </ProductContainer>
-                <ProductContainer>
-                    <ProductContainerHeader>
-                        <ItemContainer>
-                            <ItemImage src="https://www.extra-imagens.com.br/Control/ArquivoExibir.aspx?IdArquivo=32172497"/>
-                            <ItemInfoContainer>
-                                <ItemInfoDescription>Camisa do flamendo feita de algodão importado</ItemInfoDescription>
-                                <ItemInfoPrice>R$ 500,00</ItemInfoPrice>
-                            </ItemInfoContainer>
-                        </ItemContainer>
-                        <RiDeleteBin7Fill size={25} color="#5a2d82" cursor="pointer"/>
-                    </ProductContainerHeader>
-                    <ProductContainerFooter>
-                        <QuantContainer>
-                            <QuantContainerLabel>Quantidade:</QuantContainerLabel>
-                            <QuantContainerPanel>
-                                <AiOutlinePlusCircle size={25} color="#5a2d82" cursor="pointer"/>
-                                <QuantContainerPanelInput readOnly value={1}/>
-                                <AiOutlineMinusCircle size={25} color="#5a2d82" cursor="pointer"/>
-                            </QuantContainerPanel>
-                        </QuantContainer>
-                        <ProductContainerFooterPrice>R$ 500,00</ProductContainerFooterPrice>
-                    </ProductContainerFooter>
-                </ProductContainer>
-                <ProductContainer>
-                    <ProductContainerHeader>
-                        <ItemContainer>
-                            <ItemImage src="https://www.extra-imagens.com.br/Control/ArquivoExibir.aspx?IdArquivo=32172497"/>
-                            <ItemInfoContainer>
-                                <ItemInfoDescription>Camisa do flamendo feita de algodão importado</ItemInfoDescription>
-                                <ItemInfoPrice>R$ 500,00</ItemInfoPrice>
-                            </ItemInfoContainer>
-                        </ItemContainer>
-                        <RiDeleteBin7Fill size={25} color="#5a2d82" cursor="pointer"/>
-                    </ProductContainerHeader>
-                    <ProductContainerFooter>
-                        <QuantContainer>
-                            <QuantContainerLabel>Quantidade:</QuantContainerLabel>
-                            <QuantContainerPanel>
-                                <AiOutlinePlusCircle size={25} color="#5a2d82" cursor="pointer"/>
-                                <QuantContainerPanelInput readOnly value={1}/>
-                                <AiOutlineMinusCircle size={25} color="#5a2d82" cursor="pointer"/>
-                            </QuantContainerPanel>
-                        </QuantContainer>
-                        <ProductContainerFooterPrice>R$ 500,00</ProductContainerFooterPrice>
-                    </ProductContainerFooter>
-                </ProductContainer>
+                ))}
             </ProductList>
             <SidePanel>
                 <SidePanelItem>
-                    <SidePanelLabel>Subtotal (3 itens)</SidePanelLabel>
-                    <SidePanelPrice>R$ 500,00</SidePanelPrice>
+                    <SidePanelLabel>Subtotal ({totalItens} item(s))</SidePanelLabel>
+                    <SidePanelPrice>{formatPrice(totalValue)}</SidePanelPrice>
                 </SidePanelItem>
                 <SidePanelItem>
                     <SidePanelLabel>Desconto</SidePanelLabel>
@@ -110,7 +92,7 @@ function Cart(){
                 </SidePanelItem>
                 <SidePanelItem>
                     <SidePanelLabel>Valor total</SidePanelLabel>
-                    <SidePanelPrice>R$ 500,00</SidePanelPrice>
+                    <SidePanelPrice>{formatPrice(totalValue)}</SidePanelPrice>
                 </SidePanelItem>
                 <SidePanelButton>
                     <SidePanelButtonLabel>

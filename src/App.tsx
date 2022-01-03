@@ -2,11 +2,15 @@ import GlobalStyle from "./assets/styles/global";
 
 import Routes from "./routes";
 
+import {Cart} from "./context/cartContext";
+
 function App() {
   return (
     <>
       <GlobalStyle/>
-      <Routes/>
+      <Cart>
+        <Routes/>
+      </Cart>
     </>
   );
 }

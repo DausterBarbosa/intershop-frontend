@@ -26,7 +26,7 @@ export const ProductContainerHeader = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
+    padding: 15px;
 `;
 
 export const ItemContainer = styled.div`
@@ -35,7 +35,8 @@ export const ItemContainer = styled.div`
 `;
 
 export const ItemImage = styled.img`
-    width: 100px;
+    width: 70px;
+    margin-right: 20px;
 `;
 
 export const ItemInfoContainer = styled.div`

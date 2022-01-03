@@ -1,4 +1,8 @@
+import {useContext} from "react";
+
 import {useLocation} from "react-router-dom";
+
+import CartContext from "../../context/cartContext";
 
 import {GiBrazilFlag, GiPoloShirt} from "react-icons/gi";
 import {BiWorld} from "react-icons/bi";
@@ -18,6 +22,8 @@ import {
 } from "./style";
 
 function Header(){
+    const {cartItems} = useContext(CartContext);
+
     const {pathname} = useLocation();
 
     return (
@@ -35,7 +41,7 @@ function Header(){
                     <BsCart2 size={30} color="#FFF"/>
                     <CartContainer>
                         <CartLabel>Meu Carrinho</CartLabel>
-                        <CartQuant>0 item(s)</CartQuant>
+                        <CartQuant>{cartItems.length} item(s)</CartQuant>
                     </CartContainer>
                 </Cart>
             </HeaderWrapper>

@@ -9,6 +9,7 @@ import Header from "./components/Header";
 import National from "./pages/National";
 import International from "./pages/International";
 import Exclusive from "./pages/Exclusive";
+import Cart from "./pages/Cart";
 
 function AppRoutes(){
     return (
@@ -18,6 +19,7 @@ function AppRoutes(){
                 <Route path="/" element={<National/>}/>
                 <Route path="/internacionais" element={<International/>}/>
                 <Route path="/exclusivas" element={<Exclusive/>}/>
+                <Route path="/carrinho" element={<Cart/>}/>
             </Routes>
         </BrowserRouter>
     );

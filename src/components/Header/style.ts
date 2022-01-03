@@ -27,11 +27,12 @@ export const HeaderLogo = styled(Link)`
     text-decoration: none;
 `;
 
-export const Cart = styled.div`
+export const Cart = styled(Link)`
     display: flex;
     align-items: center;
     cursor: pointer;
     color: #FFF;
+    text-decoration: none;
 
     &:hover{
         opacity: 0.8;

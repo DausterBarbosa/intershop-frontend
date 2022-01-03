@@ -31,7 +31,7 @@ function Header(){
                         <NavigationContainerItem to="/exclusivas" actual={pathname === "/exclusivas"}><GiPoloShirt size={20} color="#FFF"/>Exclusivas</NavigationContainerItem>
                     </NavigationContainer>
                 </PanelContainer>
-                <Cart>
+                <Cart to="/carrinho">
                     <BsCart2 size={30} color="#FFF"/>
                     <CartContainer>
                         <CartLabel>Meu Carrinho</CartLabel>
